@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Content Story Toggle</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;700&display=swap" rel="stylesheet">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<style>
+/* ================= RESET ================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================= TYPOGRAPHY ================= */
+h2 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #3c4043;
+}
+
+h3 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  color: #3c4043;
+}
+
+p {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 26px;
+  margin-top: 12px;
+  color: #3c4043;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+/* ================= LAYOUT ================= */
+section {
+  max-width: 1280px;
+  min-height: 100vh;
+  margin: auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.width--55 {
+  width: 55%;
+  padding: 40px;
+}
+
+.width--45 {
+  width: 45%;
+  padding: 40px;
+}
+
+.content--wrapper p {
+  margin-top: 16px;
+}
+
+/* ================= GRAPHICS ================= */
+.cs--graphics-area {
+  display: grid;
+}
+
+.cs--graphics-sequence {
+  grid-column: 1;
+  grid-row: 1;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.cs--graphics-sequence.is--active {
+  opacity: 1;
+}
+
+/* ================= CONTENT ================= */
+.cs--content-area {
+  cursor: pointer;
+}
+
+.cs--content-sequence {
+  position: relative;
+  padding-left: 20px;
+  margin: 40px 0;
+}
+
+/* Progress bar */
+.cs--content-progress-indicator--wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: #dcdcdc;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.cs--content-progress-indicator--bar {
+  width: 100%;
+  height: 100%;
+  background: #3c4043;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+.cs--content-area.is--active
+.cs--content-progress-indicator--bar {
+  animation: fillProgress linear;
+  animation-duration: var(--slideDuration, 2s);
+}
+
+.cs--content-progress-indicator--bar.paused {
+  animation: none;
+}
+
+/* Headline */
+.cs--content-headline h3 {
+  opacity: 0.6;
+  transition: 0.25s ease;
+}
+
+.cs--content-area.is--active h3 {
+  opacity: 1;
+}
+
+/* Description */
+.cs--content-desc {
+  height: 0;
+  overflow: hidden;
+}
+
+/* ================= ANIMATION ================= */
+@keyframes fillProgress {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .width--55,
+  .width--45 {
+    width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<section>
+  <div class="row content-story-toggle--js" style="--slideDuration: 8s;">
+
+    <!-- Graphics -->
+    <div class="width--55">
+      <div class="cs--graphics-area">
+        <div class="cs--graphics-sequence">
+          <img src="https://unsplash.it/520/600">
+        </div>
+        <div class="cs--graphics-sequence">
+          <img src="https://unsplash.it/521/600">
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="width--45">
+
+      <div class="content--wrapper">
+        <h2>Content<br>story toggle</h2>
+        <p>His many legs, pitifully thin compared with the size of the rest of him.</p>
+      </div>
+
+      <!-- Item 1 -->
+      <div class="cs--content-area">
+        <div class="cs--content-sequence">
+          <div class="cs--content-progress-indicator--wrapper">
+            <div class="cs--content-progress-indicator--bar"></div>
+          </div>
+          <div class="cs--content-headline">
+            <h3>This is super fancy</h3>
+          </div>
+          <div class="cs--content-desc">
+            <p>One morning, when Gregor Samsa woke from troubled dreams.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="cs--content-area">
+        <div class="cs--content-sequence">
+          <div class="cs--content-progress-indicator--wrapper">
+            <div class="cs--content-progress-indicator--bar"></div>
+          </div>
+          <div class="cs--content-headline">
+            <h3>This is super trendy</h3>
+          </div>
+          <div class="cs--content-desc">
+            <p>One morning, when Gregor Samsa woke from troubled dreams.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+document.querySelectorAll(".content-story-toggle--js").forEach(wrapper => {
+
+  const contentArea = wrapper.querySelectorAll(".cs--content-area");
+  const contentDesc = wrapper.querySelectorAll(".cs--content-desc");
+  const images = wrapper.querySelectorAll(".cs--graphics-sequence");
+  const bars = wrapper.querySelectorAll(".cs--content-progress-indicator--bar");
+
+  let index = 0;
+  let interval;
+
+  contentArea[0].classList.add("is--active");
+  images[0].classList.add("is--active");
+  gsap.set(contentDesc[0], { height: "auto" });
+
+  autoplay();
+
+  contentArea.forEach((item, i) => {
+    item.addEventListener("click", () => {
+      stop();
+      activate(i);
+    });
+  });
+
+  function autoplay() {
+    const duration = parseInt(
+      wrapper.style.getPropertyValue("--slideDuration").replace("s", "000")
+    );
+
+    interval = setInterval(() => {
+      index = (index + 1) % contentArea.length;
+      activate(index);
+    }, duration);
+  }
+
+  function stop() {
+    clearInterval(interval);
+    bars.forEach(b => b.classList.add("paused"));
+  }
+
+  function activate(i) {
+    contentArea.forEach(a => a.classList.remove("is--active"));
+    images.forEach(img => img.classList.remove("is--active"));
+    gsap.to(contentDesc, { height: 0, duration: 0.25 });
+
+    contentArea[i].classList.add("is--active");
+    images[i].classList.add("is--active");
+    gsap.to(contentDesc[i], { height: "auto", duration: 0.25 });
+  }
+});
+</script>
+
+</body>
+</html>
