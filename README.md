@@ -7,3 +7,6 @@
 
 <img width="1002" height="646" alt="image" src="https://github.com/user-attachments/assets/8a6e6552-35e1-490e-8208-c4d58be969d4" />
 
+# image scrolling
+<img width="1275" height="391" alt="image" src="https://github.com/user-attachments/assets/09da748b-56b5-42c6-9a61-410447619d79" />
+
